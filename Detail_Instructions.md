@@ -14,7 +14,7 @@
 8. Once ready, your IDE will open to a welcome screen. Below that, you should see a terminal prompt. You can run AWS CLI commands in here just like you would on your local computer. Verify that your user is logged in by running this command.
 
 ```console
-user:~/environment $ aws sts get-caller-identity
+Admin:~/environment $ aws sts get-caller-identity
 ```
 
 ![Cloud9](./images/bg-1.png)
@@ -23,18 +23,11 @@ We will be using Cloud9 IDE for our development.
 
 ## Configure Code Commit Credential Helper
 
+In the terminal prompt, run the following commands to enable git to use the credential helper with the AWS credential profile.
+
 ```console 
-user:~/environment $ git config --global credential.helper '!aws codecommit credential-helper $@'
-user:~/environment $ git config --global credential.UseHttpPath true
-```
-
-```console
-user:~/environment $ git config --global --edit
-```
-
-```[credential]
-        helper = !aws codecommit credential-helper $@
-        UseHttpPath = true
+Admin:~/environment $ git config --global credential.helper '!aws codecommit credential-helper $@'
+Admin:~/environment $ git config --global credential.UseHttpPath true
 ```
 
 ## Create an AWS CodeCommit Repository
@@ -48,7 +41,7 @@ user:~/environment $ git config --global --edit
 7. Go to your Cloud9 IDE.  In the terminal prompt paste clone command you previouly copied. 
 
 ```console 
-user:~/environment $ git clone URL
+Admin:~/environment $ git clone <REPOSITORY_URL>
 ```
 
 ![Cloned Repo](./images/bg-2.png)
@@ -56,18 +49,18 @@ user:~/environment $ git clone URL
 8. Configure Git user in Cloud9 environment.
 
 ```console
-user:~/environment $ git config --global user.email you@example.com
-user:~/environment $ git config --global user.name "Your Name"
+Admin:~/environment $ git config --global user.email you@example.com
+Admin:~/environment $ git config --global user.name "Your Name"
 ```
 
 9. Inside BlueGreenWebApp folder, download the Sample Web App Archive by running the following command from IDE terminal and unzip the archvie.
 
 ```console
-user:~/environment $ wget https://github.com/aws-samples/aws-cicd-bluegreen/raw/master/WebApp.zip
-user:~/environment $ unzip WebApp.zip
-user:~/environment $ mv WebApp/* .
-user:~/environment $ rm -rf WebApp
-user:~/environment $ rm WebApp.zip
+Admin:~/environment $ cd BlueGreenWebApp
+Admin:~/environment/BlueGreenWebApp (master) $ wget https://github.com/andreascg/aws-cicd-bluegreen/raw/master/WebApp.zip
+Admin:~/environment/BlueGreenWebApp (master) $ unzip WebApp.zip
+Admin:~/environment/BlueGreenWebApp (master) $ mv WebApp/* .
+Admin:~/environment/BlueGreenWebApp (master) $ rm -rf WebApp*
 ```
 
 Your IDE environment should look like this.
@@ -77,15 +70,15 @@ Your IDE environment should look like this.
 10. Stage your change by running **_git add_**. You can use **_git status_** to review the changes.
 
 ```console
-user:~/environment/BlueGreenEnvironment/ $ git add .
-user:~/environment/BlueGreenEnvironment/ $ git status
+Admin:~/environment/BlueGreenWebApp (master) $ git add .
+Admin:~/environment/BlueGreenWebApp (master) $ git status
 ```
 
 11. Commit your change by running **_git commit_** to commit the change to the local repository then run **_git push_** to push your commit the default remote name Git uses for your AWS CodeCommit repository (origin). Enter your git credential.
 
 ```console
-user:~/environment/BlueGreenEnvironment/ $ git commit -m "Initial Commit"
-user:~/environment/BlueGreenEnvironment/ $ git push
+Admin:~/environment/BlueGreenWebApp (master) $ git commit -m "Initial Commit"
+Admin:~/environment/BlueGreenWebApp (master) $ git push
 ```
 
 ![Project](./images/bg-4.png)
@@ -99,10 +92,10 @@ In this step, we will be using CloudFormation template to create infrstructure u
 1. In Cloud9, create CloudFormation stack by running this command. If the command execute with no issues, you should see the StackId return back.
 
 ```console
-user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation create-stack --stack-name BlueGreenEnvironment --template-body file://template.yml --capabilities CAPABILITY_IAM
+Admin:~/environment/BlueGreenWebApp (master) $ aws cloudformation create-stack --stack-name BlueGreenEnvironment --template-body file://template.yml --capabilities CAPABILITY_IAM
 ```
 
-2. Go to AWS CloudFormation console to view its progress.  Once complete, go to Outputs Tab and observe the Cloudformation output value. Browse the URL of your ALB, in your favorite browser.
+2. Go to [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation) to view its progress.  Once complete, go to Outputs Tab and observe the Cloudformation output value. Browse the URL of your ALB, in your favorite browser.
 
 ![ALB](./images/bg-11.png)
 
@@ -110,7 +103,7 @@ user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation cre
 
 > AWS CodeBuild is a fully managed continuous integration service that compiles source code, runs tests, and produces software packages that are ready to deploy. With CodeBuild, you don’t need to provision, manage, and scale your own build servers. CodeBuild scales continuously and processes multiple builds concurrently, so your builds are not left waiting in a queue. You can get started quickly by using prepackaged build environments, or you can create custom build environments that use your own build tools. With CodeBuild, you are charged by the minute for the compute resources you use.
 
-1. Go to CodeBuild Console and click Create build project. Enter your build project information.
+1. Go to [CodeBuild Console](https://console.aws.amazon.com/codebuild) and click Create build project. Enter your build project information.
 
      **_Project configuration_**
 
@@ -158,7 +151,7 @@ user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation cre
 
 > AWS CodeDeploy is a fully managed deployment service that automates software deployments to a variety of compute services such as Amazon EC2, AWS Lambda, and your on-premises servers. AWS CodeDeploy makes it easier for you to rapidly release new features, helps you avoid downtime during application deployment, and handles the complexity of updating your applications. You can use AWS CodeDeploy to automate software deployments, eliminating the need for error-prone manual operations. The service scales to match your deployment needs, from a single Lambda function to thousands of EC2 instances.
 
-1. Go to CodeDeploy Console, click **Create application**. Enter Application configuration and click **Create application**
+1. Go to [CodeDeploy Console](https://console.aws.amazon.com/codedeploy), click **Create application**. Enter Application configuration and click **Create application**
 
      * **Application name:** BlueGreenWebApp  
      * **Compute platform:** EC2/On-premises  
@@ -205,17 +198,17 @@ user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation cre
 
 Click **Create deployment**
 
-4. Under the deployment, observe Deployment status. Wait until the deployment has completed and check the ALB URL to see the application deployed.
+4. Under the deployment, observe Deployment status. Wait until the deployment has completed and browse to your ALB endpoint to see the application deployed.
 
 ![ALB](./images/bg-7.png)
 
-## Create CICD with CodePipeline
+## Create CI/CD with CodePipeline
 
 > AWS CodePipeline is a fully managed continuous delivery service that helps you automate your release pipelines for fast and reliable application and infrastructure updates. CodePipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define. This enables you to rapidly and reliably deliver features and updates. You can easily integrate AWS CodePipeline with third-party services such as GitHub or with your own custom plugin. With AWS CodePipeline, you only pay for what you use. There are no upfront fees or long-term commitments.
 
-You are going to configure a CodePipleline to use CodeBuild and CodeDeploy previously created.
+You are going to configure a CodePipeline to use CodeBuild and CodeDeploy previously created.
 
-1. Go to CodePipeline Console and click **Create Pipeline**.  Configure your Pipeline as followed:
+1. Go to [CodePipeline Console](https://console.aws.amazon.com/codepipeline) and click **Create Pipeline**.  Configure your Pipeline as followed:
 
      * **Pipeline name:** BlueGreenWebApp_Pipeline
      * **Service role:** New service role  
@@ -273,12 +266,22 @@ You are going to configure a CodePipleline to use CodeBuild and CodeDeploy previ
 4. Commit the change and push to the remote repository.
 
 ```console
-user:~/environment/BlueGreenEnvironment/ $ git add .
-user:~/environment/BlueGreenEnvironment/ $ git commit -m "Changes from the CICD workshop"
-user:~/environment/BlueGreenEnvironment/ $ git push
+Admin:~/environment/BlueGreenWebApp (master) $ git add .
+Admin:~/environment/BlueGreenWebApp (master) $ git commit -m "Changes from the CICD workshop"
+Admin:~/environment/BlueGreenWebApp (master) $ git push
 ```
 
 5. Go back to CodePipeline Console and observe the progress.
 6. Once completed, browse to your ALB endpoint.
+
+## (Optional) Test AutoScaling
+
+We're going to stress test the ALB endpoint to see the AutoScaling Group adding more instances to handle the new load.
+
+1. In the terminal prompt of the Cloud9 environment, run the following command
+```console
+Admin:~/environment $ ab 
+```
+1. Navigate to the [EC2 Console](https://console.aws.amazon.com/ec2)
 
 **Congratulations! You have completed the lab.**
