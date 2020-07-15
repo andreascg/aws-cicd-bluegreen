@@ -444,11 +444,11 @@ Resources:
         - Ref: PrivateSubnet02
       LaunchConfigurationName:
         Ref: LaunchConfig
-      MinSize: '2'
+      MinSize: '1'
       MaxSize: '4'
       TargetGroupARNs:
       - Ref: ALBTargetGroup
-      DesiredCapacity: '2'
+      DesiredCapacity: '1'
       Tags:
       - Key: Name
         Value: BlueGreenWebHost
@@ -463,6 +463,9 @@ Resources:
         MaxBatchSize: '1'
         PauseTime: PT10M
         WaitOnResourceSignals: 'true'
+    HealthCheckType: ELB
+    MetricsCollection: 
+      Granularity: '1Minute'
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Metadata:
@@ -626,7 +629,31 @@ Resources:
               - |+              
       SecurityGroups: 
         - Ref: "InstanceSecurityGroup"
-      InstanceType: t2.small
+      InstanceType: t2.micro
+  CPUPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: 
+        - Ref: WebServerGroup
+      PolicyType: TargetTrackingPolicy
+      TargetTRackingConfiguration:
+        TargetValue: '30.0'
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+  ALBRequestCountPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: 
+        - Ref: WebServerGroup
+      PolicyType: TargetTrackingPolicy
+      TargetTRackingConfiguration:
+        TargetValue: '50'
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ALBRequestCountPerTarget
+          ResourceLabel: !Join 
+            - '/' 
+            - - Fn::GetAtt: ApplicationLoadBalancer.LoadBalancerFullName
+              - Fn::GetAtt: ALBTargetGroup.TargetGroupFullName          
   ApplicationLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
