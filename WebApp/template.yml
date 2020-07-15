@@ -582,7 +582,7 @@ Resources:
               - |                              
                 cd /home/ec2-user/
               - 'wget https://aws-codedeploy-'
-              - !Ref 'AWS::Region'
+              - Ref: 'AWS::Region'
               - |
                 .s3.amazonaws.com/latest/install
               - |
@@ -650,9 +650,10 @@ Resources:
         TargetValue: '50'
         PredefinedMetricSpecification:
           PredefinedMetricType: ALBRequestCountPerTarget
-          ResourceLabel: !Join 
-            - '/' 
-            - - Fn::GetAtt: ApplicationLoadBalancer.LoadBalancerFullName
+          ResourceLabel: 
+            Fn::Join: 
+              - '/' 
+              - Fn::GetAtt: ApplicationLoadBalancer.LoadBalancerFullName
               - Fn::GetAtt: ALBTargetGroup.TargetGroupFullName          
   ApplicationLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
