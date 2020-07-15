@@ -205,7 +205,7 @@ user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation cre
 
 Click **Create deployment**
 
-4. Under the deployment, observe Deployment status.
+4. Under the deployment, observe Deployment status. Wait until the deployment has completed and check the ALB URL to see the application deployed.
 
 ![ALB](./images/bg-7.png)
 
@@ -265,7 +265,7 @@ You are going to configure a CodePipleline to use CodeBuild and CodeDeploy previ
             <a class="twitter-link" href="http://twitter.com/home/?status=I%20created%20a%20project%20with%20AWS%20CodeStar!%20%23AWS%20%23AWSCodeStar%20https%3A%2F%2Faws.amazon.com%2Fcodestar"><img src="img/tweet.svg" /></a>
             <div class="text">
                 <h1>Congratulations!</h1>
-                <h2>You just created a Node.js web application V2 from re:invent!</h2>
+                <h2>You just created a Node.js web application V2 from the CICD workshop!</h2>
             </div>
         </div>
 ```
@@ -274,7 +274,7 @@ You are going to configure a CodePipleline to use CodeBuild and CodeDeploy previ
 
 ```console
 user:~/environment/BlueGreenEnvironment/ $ git add .
-user:~/environment/BlueGreenEnvironment/ $ git commit -m "Changes from re:invent"
+user:~/environment/BlueGreenEnvironment/ $ git commit -m "Changes from the CICD workshop"
 user:~/environment/BlueGreenEnvironment/ $ git push
 ```
 
