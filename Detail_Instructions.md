@@ -280,8 +280,10 @@ We're going to stress test the ALB endpoint to see the AutoScaling Group adding 
 
 1. In the terminal prompt of the Cloud9 environment, run the following command
 ```console
-Admin:~/environment $ ab 
+Admin:~/environment $ ab -c 100 -t 3600 -n 10000000 <ALB ENDPOINT>
 ```
-1. Navigate to the [EC2 Console](https://console.aws.amazon.com/ec2)
+2. Navigate to the [EC2 AutoScaling Console](https://console.aws.amazon.com/ec2/autoscaling/home)
+3. Select the AutoScaling Group created for the BlueGreenApp
+4. Check in **_Activy_** or **_Monitoring_** if new instances are being created
 
 **Congratulations! You have completed the lab.**
