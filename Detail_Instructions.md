@@ -4,10 +4,6 @@
 
 > AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes prepackaged with essential tools for popular programming languages, including JavaScript, Python, PHP, and more, so you don’t need to install files or configure your development machine to start new projects. Since your Cloud9 IDE is cloud-based, you can work on your projects from your office, home, or anywhere using an internet-connected machine. Cloud9 also provides a seamless experience for developing serverless applications enabling you to easily define resources, debug, and switch between local and remote execution of serverless applications. With Cloud9, you can quickly share your development environment with your team, enabling you to pair program and track each other's inputs in real time.
 
-Note: 
-1. For this lab you will need to use an IAM user and not a federated user account or root account. See the [Prerequisites](./Prerequisites.md)
-2. Only us-east-1(N.VA), us-east-2(Ohio), us-west-2(Oregon) and eu-west-1(Irland) are supported.
-
 1. Go to the AWS Management Console, click **Services** then select **Cloud9** under Developer Tools.
 2. Click **Create environment**.
 3. Enter **_BlueGreenEnvironment_** into **Name** and optionally provide a **Description**.
@@ -25,38 +21,46 @@ user:~/environment $ aws sts get-caller-identity
 
 We will be using Cloud9 IDE for our development. 
 
-## Create Code Commit Credentials
+## Configure Code Commit Credential Helper
 
-1. Go to IAM Console and click **User** on the left menu. Click the Username of the IAM user which you are currently logging on with.
-2. On the user details page in IAM console, choose the **Security Credentials** tab, and in **HTTPS Git credentials for AWS CodeCommit**, choose **Generate**.
+```console 
+user:~/environment $ git config --global credential.helper '!aws codecommit credential-helper $@'
+user:~/environment $ git config --global credential.UseHttpPath true
+```
 
-![HTTPS Git Credential](./images/codecommit-iam-gc1.png)
+```console
+user:~/environment $ git config --global --edit
+```
 
-Note: Make Note of the Git HTTP credentials handy. It will be used for cloning and pushing changes to Repo. Also, You can find detail instruction on how to configure HTTPS Git Credential [here](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-gc.html)
+```[credential]
+        helper = !aws codecommit credential-helper $@
+        UseHttpPath = true
+```
 
 ## Create an AWS CodeCommit Repository
 
 1. Open the AWS CodeCommit console at <https://console.aws.amazon.com/codecommit>.
-2. In the region selector, choose the region where you will create the repository. For more information, see [Regions and Git Connection Endpoints](http://docs.aws.amazon.com/codecommit/latest/userguide/regions.html).
-3. On the Welcome page, choose Get Started Now. (If a **_Dashboard_** page appears instead, choose **_Create repository_**.)
-4. On the **Create repository** page, in the **Repository name** box, type **_BlueGreenWebApp_**.
-5. In the **Description** box, type **_BlueGreenWebApp repository_**.
-6. Click **Create repository** to create an empty AWS CodeCommit repository.
-7. On the **Connection Steps** screen, review Connection steps. We completed step 2 from the previous section. Select the **Clone URL** drop-down list to copy the Clone HTTPS command.
-8. Go to your Cloud9 IDE.  In the terminal prompt paste clone command you previouly copied. Enter Username and Password of your Git Credential. (You will not see the password when you pasted it. Do not worry! Hit Enter.)
+2. On the Welcome page, choose Get Started Now. (If a **_Dashboard_** page appears instead, choose **_Create repository_**.)
+3. On the **Create repository** page, in the **Repository name** box, type **_BlueGreenWebApp_**.
+4. In the **Description** box, type **_BlueGreenWebApp repository_**.
+5. Click **Create repository** to create an empty AWS CodeCommit repository.
+6. On the **Connection Steps** screen, review Connection steps. We completed step 2 from the previous section. Select the **Clone URL** drop-down list to copy the Clone HTTPS command.
+7. Go to your Cloud9 IDE.  In the terminal prompt paste clone command you previouly copied. 
+
+```console 
+user:~/environment $ git clone URL
+```
 
 ![Cloned Repo](./images/bg-2.png)
 
-9. Configure Git user in Cloud9 environment.
+8. Configure Git user in Cloud9 environment.
 
 ```console
 user:~/environment $ git config --global user.email you@example.com
 user:~/environment $ git config --global user.name "Your Name"
-user:~/environment $ cd BlueGreenWebApp
-user:~/environment $ git config credential.helper store
 ```
 
-10. Inside BlueGreenWebApp folder, download the Sample Web App Archive by running the following command from IDE terminal and unzip the archvie.
+9. Inside BlueGreenWebApp folder, download the Sample Web App Archive by running the following command from IDE terminal and unzip the archvie.
 
 ```console
 user:~/environment $ wget https://github.com/aws-samples/aws-cicd-bluegreen/raw/master/WebApp.zip
@@ -70,14 +74,14 @@ Your IDE environment should look like this.
 
 ![Project](./images/bg-3.png)
 
-11. Stage your change by running **_git add_**. You can use **_git status_** to review the changes.
+10. Stage your change by running **_git add_**. You can use **_git status_** to review the changes.
 
 ```console
 user:~/environment/BlueGreenEnvironment/ $ git add .
 user:~/environment/BlueGreenEnvironment/ $ git status
 ```
 
-12. Commit your change by running **_git commit_** to commit the change to the local repository then run **_git push_** to push your commit the default remote name Git uses for your AWS CodeCommit repository (origin). Enter your git credential.
+11. Commit your change by running **_git commit_** to commit the change to the local repository then run **_git push_** to push your commit the default remote name Git uses for your AWS CodeCommit repository (origin). Enter your git credential.
 
 ```console
 user:~/environment/BlueGreenEnvironment/ $ git commit -m "Initial Commit"
@@ -117,15 +121,16 @@ user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation cre
 
      * **Source provider:** AWS CodeCommit  
      * **Repository:** BlueGreenWebApp   _Note:_ this is your source reporsitory that you have created earlier.
+     * **Branch:** Master
 
      **_Environment_**
 
      In this step, we configure the build environment.
 
      * **Environment image:** Managed image  
-     * **Operating system:** Ubuntu  
+     * **Operating system:** Ubuntu 
      * **Runtime(s):** Standard
-     * **Image:** aws/codebuild/standard:2.0
+     * **Image:** aws/codebuild/standard:4.0
      * **Image version:** Always use the latest image for this runtime version
      * **Environment type:** Linux
      * **Service role:** New service role  
@@ -145,8 +150,8 @@ user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation cre
 
      Click **Create build project**
 
-2. In your Build Project, click **Start build**. Leave everything with defualt value, click **Start build**
-3. Observe the build process and logs. When completed, click **View artifacts** link in the Build status section which should take you to the build output zip file in your build artifact S3 bucket.
+2. In your Build Project, click **Start build**. Leave everything with default value, click **Start build**
+3. Observe the build process and logs. When completed, click **Build details** tab and navigate to the **Artifacts** section.
 4. Congratulations! You succesfully made your first build.
 
 ## Configure CodeDeploy
@@ -193,7 +198,7 @@ user:~/environment/BlueGreenEnvironment/BlueGreenWebApp $ aws cloudformation cre
 
      * **Deployment group:** BlueGreenWebApp_DeploymentGroup  
      * **Revision type:** My application is stored in Amazon S3  
-     * **Revision location:** s3://build-artifact-bluegreenbucket-us-east-1-XXXXXXXXXXXX/BlueGreenWebAppBuild.zip   Note: This is the location of the build artifact from your CodeBuild project.  
+     * **Revision location:** s3://build-artifact-bluegreenbucket-REGION-1-XXXXXXXXXXXX/BlueGreenWebAppBuild.zip   Note: This is the location of the build artifact from your CodeBuild project.
      * **Revision file type:** .zip  
 
      Leave everything as the default value.
@@ -212,7 +217,7 @@ You are going to configure a CodePipleline to use CodeBuild and CodeDeploy previ
 
 1. Go to CodePipeline Console and click **Create Pipeline**.  Configure your Pipeline as followed:
 
-     * **Pipeline name:** BlueGreenWebApp_Pipeline  
+     * **Pipeline name:** BlueGreenWebApp_Pipeline
      * **Service role:** New service role  
      * **Role name:** AWSCodePipelineServiceRole-us-east-1-BlueGreenWebApp_Pipeline (Automatically filled)  
      Enable **Allow AWS CodePipeline to create a service role so it can be used with this new pipeline**  
@@ -277,11 +282,3 @@ user:~/environment/BlueGreenEnvironment/ $ git push
 6. Once completed, browse to your ALB endpoint.
 
 **Congratulations! You have completed the lab.**
-
-## Clean up Instruction
-
-1. Go to EC2 Console and navigate to Auto Scaling Groups. Select CodeDeploy_BlueGreenWebApp_DeploymentGroup-XXXXXXXXXXXX, click Actions and select Delete. (There may be more than one Auto Scaling Group with the naming convention CodeDeploy_BlueGreenWebApp_DeploymentGroup-XXXXXXXXXXXX, Delete all that exist with this naming convention)
-2. Go to S3 Console and empty bucket build-artifact-bluegreenbucket-us-east-1-XXXXXXXXXXXX and empty and delete bucket codepipeline-region-XXXXXXXXXXX.
-3. Go to CloudFormation console, select the stack name BlueGreenEnvironment or the stackname that you created. Click Actions and select Delete Stack.
-4. Go to CodeCommit, CodeBuild, CodeDeploy and CodePipeline console.  Delete the resource that you have created.
-5. Go to IAM Console and delete CodeDeploy role, CodePipeline roles and CodePipeline Policies. Search for BlueGreenWebApp.
