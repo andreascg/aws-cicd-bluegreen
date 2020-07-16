@@ -452,10 +452,13 @@ Resources:
       Tags:
       - Key: Name
         Value: BlueGreenWebHost
-        PropagateAtLaunch: 'true'           
+        PropagateAtLaunch: 'true' 
+      HealthCheckType: ELB
+      MetricsCollection: 
+        - Granularity: '1Minute'          
     CreationPolicy:
       ResourceSignal:
-        Count: '2'
+        Count: '1'
         Timeout: PT5M
     UpdatePolicy:
       AutoScalingRollingUpdate:
@@ -463,9 +466,7 @@ Resources:
         MaxBatchSize: '1'
         PauseTime: PT10M
         WaitOnResourceSignals: 'true'
-    HealthCheckType: ELB
-    MetricsCollection: 
-      Granularity: '1Minute'
+    
   LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Metadata:
