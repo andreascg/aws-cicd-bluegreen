@@ -635,8 +635,7 @@ Resources:
   CPUPolicy:
     Type: AWS::AutoScaling::ScalingPolicy
     Properties:
-      AutoScalingGroupName: 
-        - Ref: WebServerGroup
+      AutoScalingGroupName: !Ref WebServerGroup
       PolicyType: TargetTrackingPolicy
       TargetTrackingConfiguration:
         TargetValue: '30.0'
@@ -645,8 +644,7 @@ Resources:
   ALBRequestCountPolicy:
     Type: AWS::AutoScaling::ScalingPolicy
     Properties:
-      AutoScalingGroupName: 
-        - Ref: WebServerGroup
+      AutoScalingGroupName: !Ref WebServerGroup
       PolicyType: TargetTrackingPolicy
       TargetTrackingConfiguration:
         TargetValue: '50.0'
@@ -655,8 +653,8 @@ Resources:
           ResourceLabel: 
             Fn::Join: 
               - '/' 
-              - - Fn::GetAtt: ApplicationLoadBalancer.LoadBalancerFullName
-                - Fn::GetAtt: ALBTargetGroup.TargetGroupFullName          
+              - - !GetAtt ApplicationLoadBalancer.LoadBalancerFullName
+                - !GetAtt ALBTargetGroup.TargetGroupFullName          
   ApplicationLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
