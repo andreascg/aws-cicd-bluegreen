@@ -72,59 +72,59 @@ Mappings:
       Arch: HVM64    
   AWSRegionArch2AMI:
     us-east-1:
-      HVM64: ami-0ff8a91507f77f867
-      HVMG2: ami-0a584ac55a7631c0c
+      HVM64: ami-0f84e2a3635d2fac9
+      HVMG2: ami-09d95fab7fff3776c
     us-west-2:
-      HVM64: ami-0bb5806b2e825a199
-      HVMG2: ami-01bbe152bf19d0289
+      HVM64: ami-02f3764e7e508e7c1
+      HVMG2: ami-0e34e7b9ca0ace12d
     us-west-1:
-      HVM64: ami-0bdb828fd58c52235
-      HVMG2: ami-066ee5fd4a9ef77f1
+      HVM64: ami-00b5b04854bca6596
+      HVMG2: ami-04e59c05167ea7bd5
     eu-west-1:
       HVM64: ami-031a3db8bacbcdc20
-      HVMG2: ami-09693313102a30b2c
+      HVMG2: ami-0ea3405d2d2522162
     eu-west-2:
-      HVM64: ami-f976839e
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-03603cffd09f888ee
+      HVMG2: ami-032598fcc7e9d1c7a
     eu-west-3:
-      HVM64: ami-0ebc281c20e89ba4b
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-06edd8a0652b08d0c
+      HVMG2: ami-01c72e187b357583b
     eu-central-1:
-      HVM64: ami-0233214e13e500f77
-      HVMG2: ami-06223d46a6d0661c7
+      HVM64: ami-0c61d683d1005721b
+      HVMG2: ami-0a02ee601d742e89f
     ap-northeast-1:
-      HVM64: ami-06cd52961ce9f0d85
-      HVMG2: ami-053cdd503598e4a9d
+      HVM64: ami-0e9a02f8b59835fe3
+      HVMG2: ami-0a1c2ec61571737db
     ap-northeast-2:
-      HVM64: ami-0a10b2721688ce9d2
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-0653d33f65b21b146
+      HVMG2: ami-01af223aa7f274198
     ap-northeast-3:
-      HVM64: ami-0d98120a9fb693f07
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-041e531a390729639
+      HVMG2: ami-053e733f02a27d9fc
     ap-southeast-1:
-      HVM64: ami-07ad70c269d8a418c
-      HVMG2: ami-0b84d2c53ad5250c2
+      HVM64: ami-0ee438368fefad6b6
+      HVMG2: ami-0615132a0f36d24f4
     ap-southeast-2:
-      HVM64: ami-09b42976632b27e9b
-      HVMG2: ami-0a9ce9fecc3d1daf8
+      HVM64: ami-040614e40484997df
+      HVMG2: ami-088ff0e3bde7b3fdf
     ap-south-1:
-      HVM64: ami-0912f71e06545ad88
-      HVMG2: ami-097b15e89dbdcfcf4
+      HVM64: ami-0b65596e7992917f0
+      HVMG2: ami-0447a12f28fddb066
     us-east-2:
-      HVM64: ami-0b59bfac6be064b78
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-03dbdfb5287da6d81
+      HVMG2: ami-026dea5602e368e96
     ca-central-1:
-      HVM64: ami-0b18956f
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-068da813f196d8ccb
+      HVMG2: ami-0f75c2980c6a5851d 
     sa-east-1:
-      HVM64: ami-07b14488da8ea02a0
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-0de06e997cb3e0edf
+      HVMG2: ami-0477a95397a9154b3
     cn-north-1:
-      HVM64: ami-0a4eaf6c4454eda75
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-05fe01fbd81b0a3e1
+      HVMG2: ami-070bbaf63a64f1ddc
     cn-northwest-1:
-      HVM64: ami-6b6a7d09
-      HVMG2: NOT_SUPPORTED
+      HVM64: ami-0a46b9d947c40e0b8
+      HVMG2: ami-0e21949a0d60b93e2
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -567,32 +567,10 @@ Resources:
             - - |
                 #!/bin/bash -xe
               - |
-                yum install -y git
-              - |
-                yum install -y ruby
-              - |
-                yum update -y aws-cfn-bootstrap
+                yum install -y git ruby aws-cfn-bootstrap python27-devel python27-pip gcc python-pip wget
               - |
                 # Install pip and python dev libraries.
-                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-              - | 
-                yum install -y python27-devel python27-pip gcc
-              - |
-                yum install -y python-pip
-              - |
-                yum install -y wget
-              - |                              
-                cd /home/ec2-user/
-              - 'wget https://aws-codedeploy-'
-              - Ref: 'AWS::Region'
-              - |
-                .s3.amazonaws.com/latest/install
-              - |
-                chmod +x ./install
-              - |  
-                ./install auto
-              - |
-                service codedeploy-agent start
+                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm              
               - |
                 # making the website
                 mkdir /home/ec2-user/node-website                              
@@ -608,7 +586,6 @@ Resources:
               - |+
 
               - |
-                #!/bin/bash -xe
                 cd /home/ec2-user/node-website                
               - |
                 curl -sL https://rpm.nodesource.com/setup_8.x | bash -
@@ -622,13 +599,27 @@ Resources:
                 forever start app.js
               - |+
 
+              - |                              
+                cd /home/ec2-user/
+              - 'wget https://aws-codedeploy-'
+              - Ref: 'AWS::Region'
+              - |
+                .s3.amazonaws.com/latest/install
+              - |
+                chmod +x ./install
+              - |  
+                ./install auto
+              - |
+                service codedeploy-agent start
+              - |+
+
               - '/opt/aws/bin/cfn-signal -e $? '
               - '         --stack '
               - Ref: 'AWS::StackName'
               - '         --resource WebServerGroup '
               - '         --region '
               - Ref: 'AWS::Region'
-              - |+              
+              - |+
       SecurityGroups: 
         - Ref: "InstanceSecurityGroup"
       InstanceType: t2.micro
