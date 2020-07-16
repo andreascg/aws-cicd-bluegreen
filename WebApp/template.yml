@@ -654,8 +654,8 @@ Resources:
           ResourceLabel: 
             Fn::Join: 
               - '/' 
-              - Fn::GetAtt: ApplicationLoadBalancer.LoadBalancerFullName
-              - Fn::GetAtt: ALBTargetGroup.TargetGroupFullName          
+              - - Fn::GetAtt: ApplicationLoadBalancer.LoadBalancerFullName
+                - Fn::GetAtt: ALBTargetGroup.TargetGroupFullName          
   ApplicationLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
