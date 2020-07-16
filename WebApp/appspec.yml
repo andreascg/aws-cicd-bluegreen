@@ -10,11 +10,12 @@ files:
   - source: /public/
     destination: /home/ec2-user/node-website/public
 hooks: 
-  BeforeInstall:
+  ApplicationStop:
     - location: scripts/stop_server.sh
       timeout: 180
+  BeforeInstall:
     - location: scripts/beforeInstall.sh
       timeout: 180
-  AfterInstall:
+  ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 180

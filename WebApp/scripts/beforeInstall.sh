@@ -13,3 +13,5 @@ if [ -d /home/ec2-user/node-website ]; then
     rm -rf /home/ec2-user/node-website
 fi
 mkdir -vp /home/ec2-user/node-website
+
+sleep 30
