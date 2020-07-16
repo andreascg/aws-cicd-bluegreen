@@ -638,7 +638,7 @@ Resources:
       AutoScalingGroupName: 
         - Ref: WebServerGroup
       PolicyType: TargetTrackingPolicy
-      TargetTRackingConfiguration:
+      TargetTrackingConfiguration:
         TargetValue: '30.0'
         PredefinedMetricSpecification:
           PredefinedMetricType: ASGAverageCPUUtilization
@@ -648,8 +648,8 @@ Resources:
       AutoScalingGroupName: 
         - Ref: WebServerGroup
       PolicyType: TargetTrackingPolicy
-      TargetTRackingConfiguration:
-        TargetValue: '50'
+      TargetTrackingConfiguration:
+        TargetValue: '50.0'
         PredefinedMetricSpecification:
           PredefinedMetricType: ALBRequestCountPerTarget
           ResourceLabel: 
