@@ -632,6 +632,15 @@ Resources:
       SecurityGroups: 
         - Ref: "InstanceSecurityGroup"
       InstanceType: t2.micro
+  CPUPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref WebServerGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        TargetValue: '30.0'
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
   ApplicationLoadBalancer:
     Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
     Properties:
