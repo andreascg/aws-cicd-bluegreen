@@ -636,7 +636,7 @@ Resources:
     Type: AWS::AutoScaling::ScalingPolicy
     Properties:
       AutoScalingGroupName: !Ref WebServerGroup
-      PolicyType: TargetTrackingPolicy
+      PolicyType: TargetTrackingScaling
       TargetTrackingConfiguration:
         TargetValue: '30.0'
         PredefinedMetricSpecification:
@@ -645,7 +645,7 @@ Resources:
     Type: AWS::AutoScaling::ScalingPolicy
     Properties:
       AutoScalingGroupName: !Ref WebServerGroup
-      PolicyType: TargetTrackingPolicy
+      PolicyType: TargetTrackingScaling
       TargetTrackingConfiguration:
         TargetValue: '50.0'
         PredefinedMetricSpecification:
