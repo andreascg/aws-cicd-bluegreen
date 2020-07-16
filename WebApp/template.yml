@@ -454,6 +454,7 @@ Resources:
         Value: BlueGreenWebHost
         PropagateAtLaunch: 'true' 
       HealthCheckType: ELB
+      HealthCheckGracePeriod: '300'
       MetricsCollection: 
         - Granularity: '1Minute'          
     CreationPolicy:
