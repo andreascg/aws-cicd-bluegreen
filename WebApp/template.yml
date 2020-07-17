@@ -567,7 +567,6 @@ Resources:
             - - |
                 #!/bin/bash -xe
               - |
-                # Install pip and python dev libraries.
                 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm              
               - |
                 yum install -y git ruby aws-cfn-bootstrap python27-devel python27-pip gcc python-pip wget
@@ -581,8 +580,8 @@ Resources:
               - Ref: 'WebAppRole'
               - '         --region '
               - Ref: 'AWS::Region'
-
               - |+
+
               - |
                 # making the website
                 mkdir /home/ec2-user/node-website 
