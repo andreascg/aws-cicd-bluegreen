@@ -72,59 +72,59 @@ Mappings:
       Arch: HVM64    
   AWSRegionArch2AMI:
     us-east-1:
-      HVM64: ami-0f84e2a3635d2fac9
-      HVMG2: ami-09d95fab7fff3776c
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     us-west-2:
-      HVM64: ami-02f3764e7e508e7c1
-      HVMG2: ami-0e34e7b9ca0ace12d
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     us-west-1:
-      HVM64: ami-00b5b04854bca6596
-      HVMG2: ami-04e59c05167ea7bd5
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     eu-west-1:
-      HVM64: ami-031a3db8bacbcdc20
-      HVMG2: ami-0ea3405d2d2522162
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     eu-west-2:
-      HVM64: ami-03603cffd09f888ee
-      HVMG2: ami-032598fcc7e9d1c7a
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     eu-west-3:
-      HVM64: ami-06edd8a0652b08d0c
-      HVMG2: ami-01c72e187b357583b
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     eu-central-1:
-      HVM64: ami-0c61d683d1005721b
-      HVMG2: ami-0a02ee601d742e89f
+      HVM64: ami-0d905a9e0aace1f4a
+      HVMG2: NOT_SUPPORTED
     ap-northeast-1:
-      HVM64: ami-0e9a02f8b59835fe3
-      HVMG2: ami-0a1c2ec61571737db
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     ap-northeast-2:
-      HVM64: ami-0653d33f65b21b146
-      HVMG2: ami-01af223aa7f274198
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     ap-northeast-3:
-      HVM64: ami-041e531a390729639
-      HVMG2: ami-053e733f02a27d9fc
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     ap-southeast-1:
-      HVM64: ami-0ee438368fefad6b6
-      HVMG2: ami-0615132a0f36d24f4
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     ap-southeast-2:
-      HVM64: ami-040614e40484997df
-      HVMG2: ami-088ff0e3bde7b3fdf
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     ap-south-1:
-      HVM64: ami-0b65596e7992917f0
-      HVMG2: ami-0447a12f28fddb066
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     us-east-2:
-      HVM64: ami-03dbdfb5287da6d81
-      HVMG2: ami-026dea5602e368e96
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     ca-central-1:
-      HVM64: ami-068da813f196d8ccb
-      HVMG2: ami-0f75c2980c6a5851d 
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     sa-east-1:
-      HVM64: ami-0de06e997cb3e0edf
-      HVMG2: ami-0477a95397a9154b3
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     cn-north-1:
-      HVM64: ami-05fe01fbd81b0a3e1
-      HVMG2: ami-070bbaf63a64f1ddc
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
     cn-northwest-1:
-      HVM64: ami-0a46b9d947c40e0b8
-      HVMG2: ami-0e21949a0d60b93e2
+      HVM64: NOT_SUPPORTED
+      HVMG2: NOT_SUPPORTED
 Resources:
   VPC:
     Type: AWS::EC2::VPC
