@@ -567,32 +567,8 @@ Resources:
             - - |
                 #!/bin/bash -xe
               - |
-                yum install -y git
-              - |
-                yum install -y ruby
-              - |
-                yum update -y aws-cfn-bootstrap
-              - |
                 # Install pip and python dev libraries.
                 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-              - | 
-                yum install -y python27-devel python27-pip gcc
-              - |
-                yum install -y python-pip
-              - |
-                yum install -y wget
-              - |                              
-                cd /home/ec2-user/
-              - 'wget https://aws-codedeploy-'
-              - !Ref 'AWS::Region'
-              - |
-                .s3.amazonaws.com/latest/install
-              - |
-                chmod +x ./install
-              - |  
-                ./install auto
-              - |
-                service codedeploy-agent start
               - |
                 # making the website
                 mkdir /home/ec2-user/node-website                              
@@ -609,11 +585,7 @@ Resources:
 
               - |
                 #!/bin/bash -xe
-                cd /home/ec2-user/node-website                
-              - |
-                curl -sL https://rpm.nodesource.com/setup_8.x | bash -
-              - |
-                yum install -y nodejs
+                cd /home/ec2-user/node-website
               - |
                 npm install forever -g
               - |

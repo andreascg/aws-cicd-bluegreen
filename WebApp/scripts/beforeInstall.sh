@@ -7,7 +7,7 @@
 # previous deployments. The servers auto scale so the directory may or may not
 # exist.
 
-cd /home/ec2-user/node-website
+npm install forever -g
 
 if [ -d /home/ec2-user/node-website ]; then
     rm -rf /home/ec2-user/node-website
