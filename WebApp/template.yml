@@ -567,10 +567,35 @@ Resources:
             - - |
                 #!/bin/bash -xe
               - |
-                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm              
+                yum install -y git
               - |
-                yum install -y git ruby aws-cfn-bootstrap python27-devel python27-pip gcc python-pip wget
-                                           
+                yum install -y ruby
+              - |
+                yum update -y aws-cfn-bootstrap
+              - |
+                # Install pip and python dev libraries.
+                yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+              - | 
+                yum install -y python27-devel python27-pip gcc
+              - |
+                yum install -y python-pip
+              - |
+                yum install -y wget
+              - |                              
+                cd /home/ec2-user/
+              - 'wget https://aws-codedeploy-'
+              - !Ref 'AWS::Region'
+              - |
+                .s3.amazonaws.com/latest/install
+              - |
+                chmod +x ./install
+              - |  
+                ./install auto
+              - |
+                service codedeploy-agent start
+              - |
+                # making the website
+                mkdir /home/ec2-user/node-website                              
               - |+
               - '/opt/aws/bin/cfn-init -v '
               - '         --stack '
@@ -583,9 +608,7 @@ Resources:
               - |+
 
               - |
-                # making the website
-                mkdir /home/ec2-user/node-website 
-              - |
+                #!/bin/bash -xe
                 cd /home/ec2-user/node-website                
               - |
                 curl -sL https://rpm.nodesource.com/setup_8.x | bash -
@@ -599,27 +622,13 @@ Resources:
                 forever start app.js
               - |+
 
-              - |                              
-                cd /home/ec2-user/
-              - 'wget https://aws-codedeploy-'
-              - Ref: 'AWS::Region'
-              - |
-                .s3.amazonaws.com/latest/install
-              - |
-                chmod +x ./install
-              - |  
-                ./install auto
-              - |
-                service codedeploy-agent start
-              - |+
-
               - '/opt/aws/bin/cfn-signal -e $? '
               - '         --stack '
               - Ref: 'AWS::StackName'
               - '         --resource WebServerGroup '
               - '         --region '
               - Ref: 'AWS::Region'
-              - |+
+              - |+              
       SecurityGroups: 
         - Ref: "InstanceSecurityGroup"
       InstanceType: t2.micro
