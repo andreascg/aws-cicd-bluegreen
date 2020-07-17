@@ -81,7 +81,7 @@ Mappings:
       HVM64: NOT_SUPPORTED
       HVMG2: NOT_SUPPORTED
     eu-west-1:
-      HVM64: NOT_SUPPORTED
+      HVM64: ami-0d905a9e0aace1f4a
       HVMG2: NOT_SUPPORTED
     eu-west-2:
       HVM64: NOT_SUPPORTED
@@ -90,7 +90,7 @@ Mappings:
       HVM64: NOT_SUPPORTED
       HVMG2: NOT_SUPPORTED
     eu-central-1:
-      HVM64: ami-0d905a9e0aace1f4a
+      HVM64: NOT_SUPPORTED
       HVMG2: NOT_SUPPORTED
     ap-northeast-1:
       HVM64: NOT_SUPPORTED
