@@ -32,7 +32,7 @@ Admin:~/environment $ git config --global credential.UseHttpPath true
 
 ## Create an AWS CodeCommit Repository
 
-1. Open the [AWS CodeCommit console]
+1. Open the [AWS CodeCommit console](http://console.aws.amazon.com/codecommit)
 2. On the Welcome page, choose Get Started Now. (If a **_Dashboard_** page appears instead, choose **_Create repository_**.)
 3. On the **Create repository** page, in the **Repository name** box, type **_BlueGreenWebApp_**.
 4. In the **Description** box, type **_BlueGreenWebApp repository_**.
