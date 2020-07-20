@@ -4,7 +4,7 @@
 
 > AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes prepackaged with essential tools for popular programming languages, including JavaScript, Python, PHP, and more, so you don’t need to install files or configure your development machine to start new projects. Since your Cloud9 IDE is cloud-based, you can work on your projects from your office, home, or anywhere using an internet-connected machine. Cloud9 also provides a seamless experience for developing serverless applications enabling you to easily define resources, debug, and switch between local and remote execution of serverless applications. With Cloud9, you can quickly share your development environment with your team, enabling you to pair program and track each other's inputs in real time.
 
-1. Go to the AWS Management Console, click **Services** then select **Cloud9** under Developer Tools.
+1. Go to the AWS Management Console, click **Services** then select [**Cloud9**](http://console.aws.amazon.com/cloud9/) under Developer Tools.
 2. Click **Create environment**.
 3. Enter **_BlueGreenEnvironment_** into **Name** and optionally provide a **Description**.
 4. Click **Next step**.
