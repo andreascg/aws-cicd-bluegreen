@@ -3,11 +3,11 @@
 # SPDX-License-Identifier: MIT-0
 
 #make sure no Node processes are running
-service=node$
-if (( $(ps -ef | grep -v grep | grep $service | wc -l) > 0 ))$
-then$
-killall node$
-fi$
+service=node
+if (( $(ps -ef | grep -v grep | grep $service | wc -l) > 0 ))
+then
+killall node
+fi
 
 cd /home/ec2-user/node-website
 export PORT=80
