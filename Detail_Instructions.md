@@ -282,7 +282,7 @@ We're going to stress test the ALB endpoint to see the AutoScaling Group adding 
 ```console
 Admin:~/environment $ ab -c 100 -t 3600 -n 10000000 http://<ALB ENDPOINT>/index.html
 ```
-2. Navigate to the [EC2 AutoScaling Console](https://console.aws.amazon.com/ec2/autoscaling/home)
+2. Navigate to the [EC2 AutoScaling Console](https://console.aws.amazon.com/ec2autoscaling/home)
 3. Select the AutoScaling Group created by CodeDeploy
 4. Check in **_Activity_** or **_Monitoring_** if new instances are being created
 
