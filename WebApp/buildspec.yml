@@ -8,7 +8,7 @@ phases:
       nodejs: 12
     commands:
       # Install dependencies needed for running tests
-      - npm install
+      - npm ci
 
       # Upgrade AWS CLI to the latest version
       - pip install --upgrade awscli
@@ -18,15 +18,11 @@ phases:
       - npm test
   post_build:
     commands:
-      # Remove existing node_modules to clear dev dependencies
-      - rm -r node_modules
-
-      # Install runtime dependencies
-      - npm install --production
+      # Leave only runtime dependencies
+      - npm prune --production
 artifacts:
   type: zip
   files:
-    - template.yml
     - README.md
     - package.json
     - app.js
