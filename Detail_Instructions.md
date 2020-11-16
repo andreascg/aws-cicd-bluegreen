@@ -13,19 +13,19 @@
 7. Review the environment settings and click **Create environment**. It will take several minutes for your environment to be provisioned and prepared.
 8. Once ready, your IDE will open to a welcome screen. Below that, you should see a terminal prompt. You can run AWS CLI commands in here just like you would on your local computer. Verify that your user is logged in by running this command.
 
-```console
-Admin:~/environment $ aws sts get-caller-identity
-```
+     ```console
+     Admin:~/environment $ aws sts get-caller-identity
+     ```
 
-![Cloud9](./images/bg-1.png)
+     ![Cloud9](./images/bg-1.png)
 
-We will be using Cloud9 IDE for our development. 
+     We will be using Cloud9 IDE for our development.
 
 ## Configure Code Commit Git Credential Helper
 
 In the terminal prompt, run the following commands to enable git to use the credential helper with the AWS credential profile.
 
-```console 
+```console
 Admin:~/environment $ git config --global credential.helper '!aws codecommit credential-helper $@'
 Admin:~/environment $ git config --global credential.UseHttpPath true
 ```
@@ -38,52 +38,52 @@ Admin:~/environment $ git config --global credential.UseHttpPath true
 4. In the **Description** box, type **_BlueGreenWebApp repository_**.
 5. Click **Create repository** to create an empty AWS CodeCommit repository.
 6. On the **Connection Steps** screen, review Connection steps. We completed step 2 from the previous section. Select the **Clone URL** drop-down list to copy the Clone HTTPS command.
-7. Go to your Cloud9 IDE.  In the terminal prompt paste clone command you previouly copied. 
+7. Go to your Cloud9 IDE.  In the terminal prompt paste clone command you previouly copied.
 
-```console 
-Admin:~/environment $ git clone <REPOSITORY_URL>
-```
+     ```console
+     Admin:~/environment $ git clone <REPOSITORY_URL>
+     ```
 
-![Cloned Repo](./images/bg-2.png)
+     ![Cloned Repo](./images/bg-2.png)
 
 8. Configure Git user in Cloud9 environment.
 
-```console
-Admin:~/environment $ git config --global user.email you@example.com
-Admin:~/environment $ git config --global user.name "Your Name"
-```
+     ```console
+     Admin:~/environment $ git config --global user.email you@example.com
+     Admin:~/environment $ git config --global user.name "Your Name"
+     ```
 
 9. Inside BlueGreenWebApp folder, download the Sample Web App Archive by running the following command from IDE terminal and unzip the archvie.
 
-```console
-Admin:~/environment $ cd BlueGreenWebApp
-Admin:~/environment/BlueGreenWebApp (master) $ wget https://github.com/andreascg/aws-cicd-bluegreen/raw/master/WebApp.zip
-Admin:~/environment/BlueGreenWebApp (master) $ unzip WebApp.zip
-Admin:~/environment/BlueGreenWebApp (master) $ mv WebApp/* .
-Admin:~/environment/BlueGreenWebApp (master) $ rm -rf WebApp*
-```
+     ```console
+     Admin:~/environment $ cd BlueGreenWebApp
+     Admin:~/environment/BlueGreenWebApp (master) $ wget https://github.com/andreascg/aws-cicd-bluegreen/raw/master/WebApp.zip
+     Admin:~/environment/BlueGreenWebApp (master) $ unzip WebApp.zip
+     Admin:~/environment/BlueGreenWebApp (master) $ mv WebApp/* .
+     Admin:~/environment/BlueGreenWebApp (master) $ rm -rf WebApp*
+     ```
 
-Your IDE environment should look like this.
+     Your IDE environment should look like this.
 
-![Project](./images/bg-3.png)
+     ![Project](./images/bg-3.png)
 
 10. Stage your change by running **_git add_**. You can use **_git status_** to review the changes.
 
-```console
-Admin:~/environment/BlueGreenWebApp (master) $ git add .
-Admin:~/environment/BlueGreenWebApp (master) $ git status
-```
+     ```console
+     Admin:~/environment/BlueGreenWebApp (master) $ git add .
+     Admin:~/environment/BlueGreenWebApp (master) $ git status
+     ```
 
 11. Commit your change by running **_git commit_** to commit the change to the local repository then run **_git push_** to push your commit the default remote name Git uses for your AWS CodeCommit repository (origin). Enter your git credential.
 
-```console
-Admin:~/environment/BlueGreenWebApp (master) $ git commit -m "Initial Commit"
-Admin:~/environment/BlueGreenWebApp (master) $ git push
-```
+     ```console
+     Admin:~/environment/BlueGreenWebApp (master) $ git commit -m "Initial Commit"
+     Admin:~/environment/BlueGreenWebApp (master) $ git push
+     ```
 
-![Project](./images/bg-4.png)
+     ![Project](./images/bg-4.png)
 
-**_💡 Tip_** After you have pushed files to your AWS CodeCommit repository, you can use the AWS CodeCommit console to view the contents. For more information, see [Browse the Contents of a Repository](http://docs.aws.amazon.com/codecommit/latest/userguide/how-to-browse.html).
+     **_💡 Tip_** After you have pushed files to your AWS CodeCommit repository, you can use the AWS CodeCommit console to view the contents. For more information, see [Browse the Contents of a Repository](http://docs.aws.amazon.com/codecommit/latest/userguide/how-to-browse.html).
 
 ## Create Infrastructure
 
@@ -91,13 +91,13 @@ In this step, we will be using CloudFormation template to create infrstructure u
 
 1. In Cloud9, create CloudFormation stack by running this command. If the command execute with no issues, you should see the StackId return back.
 
-```console
-Admin:~/environment/BlueGreenWebApp (master) $ aws cloudformation create-stack --stack-name BlueGreenEnvironment --template-body file://template.yml --capabilities CAPABILITY_IAM
-```
+     ```console
+     Admin:~/environment/BlueGreenWebApp (master) $ aws cloudformation create-stack --stack-name BlueGreenEnvironment --template-body file://template.yml --capabilities CAPABILITY_IAM
+     ```
 
 2. Go to [AWS CloudFormation console](https://console.aws.amazon.com/cloudformation) to view its progress.  Once complete, go to Outputs Tab and observe the Cloudformation output value. Browse the URL of your ALB, in your favorite browser.
 
-![ALB](./images/bg-11.png)
+     ![ALB](./images/bg-11.png)
 
 ## Configure CodeBuild
 
@@ -121,7 +121,7 @@ Admin:~/environment/BlueGreenWebApp (master) $ aws cloudformation create-stack -
      In this step, we configure the build environment.
 
      * **Environment image:** Managed image  
-     * **Operating system:** Ubuntu 
+     * **Operating system:** Ubuntu
      * **Runtime(s):** Standard
      * **Image:** aws/codebuild/standard:4.0
      * **Image version:** Always use the latest image for this runtime version
@@ -196,9 +196,13 @@ Admin:~/environment/BlueGreenWebApp (master) $ aws cloudformation create-stack -
 
      Leave everything as the default value.
 
+     **_💡 Tip_** Your application artifacts contain a file called `appspec.yml` which is used by AWS CodeDeploy to determine what to install onto your instances or what lifecycle events hooks to run upon deployment events, such as how to start and stop your application. Take a look at this file to understand what actions are taking place to successfully deploy your application.
+
+     You can find more information following this [link](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html#appspec-reference-server).
+
 Click **Create deployment**
 
-4. Under the deployment, observe Deployment status. Wait until the deployment has completed and browse to your ALB endpoint to see the application deployed.
+1. Under the deployment, observe Deployment status. Wait until the deployment has completed and browse to your ALB endpoint to see the application deployed.
 
 ![ALB](./images/bg-7.png)
 
@@ -253,23 +257,23 @@ You are going to configure a CodePipeline to use CodeBuild and CodeDeploy previo
 2. Navigate to BlueGreenWebApp and public folder. Open index.html.
 3. Make a change to the file and save.
 
-```html
-        <div class="message">
-            <a class="twitter-link" href="http://twitter.com/home/?status=I%20created%20a%20project%20with%20AWS%20CodeStar!%20%23AWS%20%23AWSCodeStar%20https%3A%2F%2Faws.amazon.com%2Fcodestar"><img src="img/tweet.svg" /></a>
-            <div class="text">
-                <h1>Congratulations!</h1>
-                <h2>You just created a Node.js web application V2 from the CICD workshop!</h2>
-            </div>
-        </div>
-```
+     ```html
+     <div class="message">
+          <a class="twitter-link" href="http://twitter.com/home/?status=I%20created%20a%20project%20with%20AWS%20CodeStar!%20%23AWS%20%23AWSCodeStar%20https%3A%2F%2Faws.amazon.com%2Fcodestar"><img src="img/tweet.svg" /></a>
+          <div class="text">
+               <h1>Congratulations!</h1>
+               <h2>You just created a Node.js web application V2 from the CICD workshop!</h2>
+          </div>
+     </div>
+     ```
 
 4. Commit the change and push to the remote repository.
 
-```console
-Admin:~/environment/BlueGreenWebApp (master) $ git add .
-Admin:~/environment/BlueGreenWebApp (master) $ git commit -m "Changes from the CICD workshop"
-Admin:~/environment/BlueGreenWebApp (master) $ git push
-```
+     ```console
+     Admin:~/environment/BlueGreenWebApp (master) $ git add .
+     Admin:~/environment/BlueGreenWebApp (master) $ git commit -m "Changes from the CICD workshop"
+     Admin:~/environment/BlueGreenWebApp (master) $ git push
+     ```
 
 5. Go back to CodePipeline Console and observe the progress.
 6. Once completed, browse to your ALB endpoint.
@@ -279,9 +283,11 @@ Admin:~/environment/BlueGreenWebApp (master) $ git push
 We're going to stress test the ALB endpoint to see the AutoScaling Group adding more instances to handle the new load.
 
 1. In the terminal prompt of the Cloud9 environment, run the following command
-```console
-Admin:~/environment $ ab -c 100 -t 3600 -n 10000000 http://<ALB ENDPOINT>/index.html
-```
+
+     ```console
+     Admin:~/environment $ ab -c 100 -t 3600 -n 10000000 http://<ALB ENDPOINT>/index.html
+     ```
+
 2. Navigate to the [EC2 AutoScaling Console](https://console.aws.amazon.com/ec2autoscaling/home)
 3. Select the AutoScaling Group created by CodeDeploy
 4. Check in **_Activity_** or **_Monitoring_** if new instances are being created
