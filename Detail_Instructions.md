@@ -256,7 +256,7 @@ You are going to configure a CodePipeline to use CodeBuild and CodeDeploy previo
 
 2. Observe your existing commit going through CodePipeline.  
 
-**_💡 Tip_** Now that we have a pipeline defining the different stages and actions to build and deploy our application, we don't need our Build action to download the code from AWS CodeCommit as this is already done by the Source stage. This change cannot be performend through the AWS web console, so execute the following command from Cloud9:
+**_💡 Tip_** Now that we have a pipeline defining the different stages and actions to build and deploy our application, we don't need our Build action to download the code from AWS CodeCommit as this is already done by the Source stage. This change cannot be performed through the AWS web console, so execute the following command from Cloud9:
 
 ```console
 Admin:~/environment/BlueGreenWebApp (master) $ aws codebuild update-project --name BlueGreenWebAppBuild --source type=CODEPIPELINE --artifacts type=CODEPIPELINE
