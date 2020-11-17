@@ -99,6 +99,8 @@ In this step, we will be using CloudFormation template to create infrstructure u
 
      ![ALB](./images/bg-11.png)
 
+     **_💡 Tip_** While resources are being provisioned, go back to Cloud9 and inspect `BlueGreenWebApp/template.yml` to understand what resources are being spun up.
+
 ## Configure CodeBuild
 
 > AWS CodeBuild is a fully managed continuous integration service that compiles source code, runs tests, and produces software packages that are ready to deploy. With CodeBuild, you don’t need to provision, manage, and scale your own build servers. CodeBuild scales continuously and processes multiple builds concurrently, so your builds are not left waiting in a queue. You can get started quickly by using prepackaged build environments, or you can create custom build environments that use your own build tools. With CodeBuild, you are charged by the minute for the compute resources you use.
@@ -145,6 +147,9 @@ In this step, we will be using CloudFormation template to create infrstructure u
 
 2. In your Build Project, click **Start build**. Leave everything with default value, click **Start build**
 3. Observe the build process and logs. When completed, click **Build details** tab and navigate to the **Artifacts** section.
+
+     **_💡 Tip_** While the process is running, go back to Cloud9 and review `BlueGreenWebApp/buildspec.yml` to get an understanding onto what commands are being executed as part of the Build action. You can find more information about its purpose and reference in this [link](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html).
+
 4. Congratulations! You succesfully made your first build.
 
 ## Configure CodeDeploy
